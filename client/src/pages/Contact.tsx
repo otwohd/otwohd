@@ -21,7 +21,7 @@ export default function Contact() {
         keywords="오투HD 문의, 위탁영업 문의, 종합영업대행사 상담, 광고대행 문의, 공동투자 제안"
         canonicalPath="/contact"
       />
-      <PageHero eyebrow="Contact" title="성장 구조를 함께 설계할 파트너를 기다립니다." description="위탁영업 컨설팅, 자체DB추출 기반 영업 실행, 광고대행, 공동투자 제안이 필요하다면 아래 폼으로 문의 내용을 남겨주세요." />
+      <PageHero eyebrow="문의하기" title="성장 구조를 함께 설계할 파트너를 기다립니다." description="위탁영업 컨설팅, 자체DB추출 기반 영업 실행, 광고대행, 공동투자 제안이 필요하다면 아래 폼으로 문의 내용을 남겨주세요." />
 
       <section className="pb-12 sm:pb-20">
         <div className="container grid gap-8 lg:grid-cols-[0.86fr_1.14fr]">

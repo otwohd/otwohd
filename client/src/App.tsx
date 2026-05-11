@@ -1,33 +1,77 @@
-// Style reminder: Soft Futurism Corporate Minimalism — routes must preserve independent page navigation rather than single-page scroll jumps.
+// Route system: homepage is a category hub; each category/detail uses independent page navigation with immediate scroll reset.
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
-import { Route, Switch } from "wouter";
+import { useLayoutEffect } from "react";
+import { Route, Router as WouterRouter, Switch, useLocation } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import SiteLayout from "./components/SiteLayout";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import About from "./pages/About";
-import Business from "./pages/Business";
+import Business, { BusinessDetail } from "./pages/Business";
 import Contact from "./pages/Contact";
 import Home from "./pages/Home";
 import Insight, { InsightDetail } from "./pages/Insight";
-import Technology from "./pages/Technology";
+import Process from "./pages/Process";
+
+const routerBase = import.meta.env.BASE_URL === "/" ? undefined : import.meta.env.BASE_URL.replace(/\/$/, "");
+
+function ScrollToTop() {
+  const [location] = useLocation();
+
+  useLayoutEffect(() => {
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+
+    const root = document.documentElement;
+    const previousScrollBehavior = root.style.scrollBehavior;
+
+    root.style.scrollBehavior = "auto";
+
+    const resetScroll = () => {
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+      root.scrollTop = 0;
+      document.body.scrollTop = 0;
+    };
+
+    resetScroll();
+    const frame = window.requestAnimationFrame(resetScroll);
+    const timer = window.setTimeout(() => {
+      resetScroll();
+      root.style.scrollBehavior = previousScrollBehavior;
+    }, 80);
+
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.clearTimeout(timer);
+      root.style.scrollBehavior = previousScrollBehavior;
+    };
+  }, [location]);
+
+  return null;
+}
 
 function Router() {
   return (
-    <SiteLayout>
-      <Switch>
-        <Route path="/" component={Home} />
-        <Route path="/about" component={About} />
-        <Route path="/business" component={Business} />
-        <Route path="/technology" component={Technology} />
-        <Route path="/insight" component={Insight} />
-        <Route path="/insight/:slug">{(params) => <InsightDetail slug={params.slug} />}</Route>
-        <Route path="/contact" component={Contact} />
-        <Route path="/404" component={NotFound} />
-        <Route component={NotFound} />
-      </Switch>
-    </SiteLayout>
+    <WouterRouter base={routerBase}>
+      <ScrollToTop />
+      <SiteLayout>
+        <Switch>
+          <Route path="/" component={Home} />
+          <Route path="/about" component={About} />
+          <Route path="/business" component={Business} />
+          <Route path="/business/:slug">{(params) => <BusinessDetail slug={params.slug} />}</Route>
+          <Route path="/process" component={Process} />
+          <Route path="/technology" component={Process} />
+          <Route path="/insight" component={Insight} />
+          <Route path="/insight/:slug">{(params) => <InsightDetail slug={params.slug} />}</Route>
+          <Route path="/contact" component={Contact} />
+          <Route path="/404" component={NotFound} />
+          <Route component={NotFound} />
+        </Switch>
+      </SiteLayout>
+    </WouterRouter>
   );
 }
 
