@@ -47,8 +47,7 @@ export default function Home() {
               <Sparkles className="h-4 w-4 text-primary" /> 실행 구조를 설계하는 비즈니스 그룹
             </div>
             <h1 className="hero-brand-title mt-9 text-balance font-display text-[clamp(2.35rem,4.15vw,4.3rem)] font-extrabold leading-[1.08] tracking-[-0.052em] text-slate-950">
-              <span className="hero-title-line hero-title-line--top"><span>통합솔루션</span> <span>비지니스</span></span>
-              <span className="hero-title-line">파트너</span>
+              <span className="hero-title-line hero-title-line--top"><span>통합솔루션</span> <span>비지니스 파트너</span></span>
             </h1>
             <p className="mt-8 max-w-2xl text-pretty font-display text-[clamp(1.28rem,1.82vw,1.78rem)] font-extrabold leading-[1.55] tracking-[-0.035em] text-slate-900">
               오투에이치디는 운영전략 기획부터<br />계약성사까지 책임지고 함께합니다.
