@@ -5,9 +5,12 @@ import NotFound from "@/pages/NotFound";
 import { useLayoutEffect } from "react";
 import { Route, Router as WouterRouter, Switch, useLocation } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
+import MainPopup from "./components/MainPopup";
 import SiteLayout from "./components/SiteLayout";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import About from "./pages/About";
+import AdminDashboard from "./pages/AdminDashboard";
+import AdminLogin from "./pages/AdminLogin";
 import Business, { BusinessDetail } from "./pages/Business";
 import Contact from "./pages/Contact";
 import Home from "./pages/Home";
@@ -56,21 +59,31 @@ function Router() {
   return (
     <WouterRouter base={routerBase}>
       <ScrollToTop />
-      <SiteLayout>
-        <Switch>
-          <Route path="/" component={Home} />
-          <Route path="/about" component={About} />
-          <Route path="/business" component={Business} />
-          <Route path="/business/:slug">{(params) => <BusinessDetail slug={params.slug} />}</Route>
-          <Route path="/process" component={Process} />
-          <Route path="/technology" component={Process} />
-          <Route path="/insight" component={Insight} />
-          <Route path="/insight/:slug">{(params) => <InsightDetail slug={params.slug} />}</Route>
-          <Route path="/contact" component={Contact} />
-          <Route path="/404" component={NotFound} />
-          <Route component={NotFound} />
-        </Switch>
-      </SiteLayout>
+      <Switch>
+        {/* 관리자 전용 라우트 (SiteLayout 없음) */}
+        <Route path="/admin/login" component={AdminLogin} />
+        <Route path="/admin" component={AdminDashboard} />
+
+        {/* 공개 사이트 라우트 */}
+        <Route>
+          <SiteLayout>
+            <MainPopup />
+            <Switch>
+              <Route path="/" component={Home} />
+              <Route path="/about" component={About} />
+              <Route path="/business" component={Business} />
+              <Route path="/business/:slug">{(params) => <BusinessDetail slug={params.slug} />}</Route>
+              <Route path="/process" component={Process} />
+              <Route path="/technology" component={Process} />
+              <Route path="/insight" component={Insight} />
+              <Route path="/insight/:slug">{(params) => <InsightDetail slug={params.slug} />}</Route>
+              <Route path="/contact" component={Contact} />
+              <Route path="/404" component={NotFound} />
+              <Route component={NotFound} />
+            </Switch>
+          </SiteLayout>
+        </Route>
+      </Switch>
     </WouterRouter>
   );
 }
