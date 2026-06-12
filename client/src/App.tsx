@@ -61,8 +61,9 @@ function Router() {
       <ScrollToTop />
       <Switch>
         {/* 관리자 전용 라우트 (SiteLayout 없음) */}
-        <Route path="/admin/login" component={AdminLogin} />
+        {/* /admin 접속 시 AdminDashboard가 인증 체크 후 로그인 화면 표시 */}
         <Route path="/admin" component={AdminDashboard} />
+        <Route path="/admin/login" component={AdminLogin} />
 
         {/* 공개 사이트 라우트 */}
         <Route>

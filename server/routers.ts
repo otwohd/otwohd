@@ -2,6 +2,7 @@ import { COOKIE_NAME } from "@shared/const";
 import bcrypt from "bcryptjs";
 import { SignJWT, jwtVerify } from "jose";
 import { z } from "zod";
+import { parse as parseCookieHeader } from "cookie";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { ENV } from "./_core/env";
 import { systemRouter } from "./_core/systemRouter";
@@ -42,9 +43,15 @@ async function verifyAdminToken(token: string) {
   }
 }
 
+// ─── 쿠키 헤더 직접 파싱 헬퍼 (cookie-parser 없이 동작) ─────────────────────
+function getAdminToken(req: { headers: { cookie?: string } }): string | undefined {
+  const cookies = parseCookieHeader(req.headers.cookie ?? "");
+  return cookies[ADMIN_COOKIE];
+}
+
 // ─── 관리자 인증 미들웨어 ─────────────────────────────────────────────────────
 const adminProcedure = publicProcedure.use(async ({ ctx, next }) => {
-  const token = ctx.req.cookies?.[ADMIN_COOKIE];
+  const token = getAdminToken(ctx.req);
   if (!token) throw new Error("관리자 인증이 필요합니다.");
   const payload = await verifyAdminToken(token);
   if (!payload) throw new Error("유효하지 않은 토큰입니다.");
@@ -98,7 +105,7 @@ export const appRouter = router({
     }),
 
     me: publicProcedure.query(async ({ ctx }) => {
-      const token = ctx.req.cookies?.[ADMIN_COOKIE];
+      const token = getAdminToken(ctx.req);
       if (!token) return null;
       return await verifyAdminToken(token);
     }),

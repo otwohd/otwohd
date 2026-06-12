@@ -88,7 +88,8 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     if (!authLoading && !adminUser) {
-      navigate("/admin/login");
+      // 쿠키 미인식 문제를 피하기 위해 전체 페이지 이동 사용
+      window.location.href = "/admin/login";
     }
   }, [adminUser, authLoading, navigate]);
 
