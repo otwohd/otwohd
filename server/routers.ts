@@ -23,7 +23,7 @@ import {
 
 // ─── 관리자 JWT 헬퍼 ─────────────────────────────────────────────────────────
 const ADMIN_COOKIE = "otwohd_admin_token";
-const jwtSecret = new TextEncoder().encode(ENV.jwtSecret ?? "otwohd-admin-secret-key-2026");
+const jwtSecret = new TextEncoder().encode(process.env.JWT_SECRET ?? "otwohd-admin-secret-key-2026");
 
 async function signAdminToken(username: string) {
   return new SignJWT({ username, role: "admin" })
@@ -84,12 +84,10 @@ export const appRouter = router({
         const valid = await bcrypt.compare(input.password, account.passwordHash);
         if (!valid) throw new Error("아이디 또는 비밀번호가 올바르지 않습니다.");
         const token = await signAdminToken(account.username);
+        const cookieOpts = getSessionCookieOptions(ctx.req);
         ctx.res.cookie(ADMIN_COOKIE, token, {
-          httpOnly: true,
-          secure: true,
-          sameSite: "none",
+          ...cookieOpts,
           maxAge: 7 * 24 * 60 * 60 * 1000,
-          path: "/",
         });
         return { success: true, username: account.username };
       }),

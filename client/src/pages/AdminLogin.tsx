@@ -15,7 +15,10 @@ export default function AdminLogin() {
   const loginMutation = trpc.admin.login.useMutation({
     onSuccess: () => {
       toast.success("로그인 성공");
-      navigate("/admin");
+      // 쿠키가 브라우저에 반영된 후 이동하도록 강제 페이지 이동
+      setTimeout(() => {
+        window.location.href = "/admin";
+      }, 300);
     },
     onError: (err) => {
       toast.error(err.message || "로그인 실패");
