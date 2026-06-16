@@ -14,6 +14,9 @@ export default function About() {
         eyebrow="오투HD 소개"
         title="오투HD는 실행 경험 위에 만들어진 비즈니스 성장 그룹입니다."
         description={brand.foundedStory}
+        contentClassName="lg:max-w-6xl"
+        titleClassName="lg:max-w-3xl"
+        descriptionClassName="lg:max-w-6xl lg:[text-wrap:wrap]"
       />
 
       <section className="overflow-hidden py-10 sm:py-16">

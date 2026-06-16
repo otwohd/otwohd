@@ -58,10 +58,9 @@ export default function SiteLayout({ children }: PropsWithChildren) {
               if (hasChildren) {
                 const expanded = desktopMenuOpen === item.href;
                 return (
-                  <div key={item.href} className="relative">
-                    <button
-                      type="button"
-                      onClick={() => setDesktopMenuOpen(expanded ? null : item.href)}
+                  <div key={item.href} className="group relative">
+                    <Link
+                      href={item.href}
                       className={`inline-flex items-center gap-1 rounded-full px-4 py-2 text-sm font-semibold transition ${
                         active ? "bg-slate-950 text-white shadow-sm" : "text-slate-600 hover:bg-slate-100 hover:text-slate-950"
                       }`}
@@ -69,10 +68,11 @@ export default function SiteLayout({ children }: PropsWithChildren) {
                       aria-expanded={expanded}
                     >
                       {item.label}
-                      <ChevronDown className={`h-4 w-4 transition ${expanded ? "rotate-180" : ""}`} />
-                    </button>
-                    {expanded && (
-                      <div className="absolute left-1/2 top-[calc(100%+0.7rem)] w-44 -translate-x-1/2 rounded-[1.25rem] border border-slate-200/80 bg-white/95 p-2 shadow-[0_22px_70px_rgba(15,23,42,0.13)] backdrop-blur-xl" role="menu">
+                      <ChevronDown className="h-4 w-4 transition group-hover:rotate-180 group-focus-within:rotate-180" />
+                    </Link>
+                    <>
+                      <div className="absolute left-0 top-full h-3 w-full" aria-hidden="true" />
+                      <div className="invisible absolute left-1/2 top-[calc(100%+0.7rem)] w-44 -translate-x-1/2 rounded-[1.25rem] border border-slate-200/80 bg-white/95 p-2 opacity-0 shadow-[0_22px_70px_rgba(15,23,42,0.13)] backdrop-blur-xl transition group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100" role="menu">
                         {children.map((child) => {
                           const childActive = isActivePath(location, child.href);
                           return (
@@ -90,7 +90,7 @@ export default function SiteLayout({ children }: PropsWithChildren) {
                           );
                         })}
                       </div>
-                    )}
+                    </>
                   </div>
                 );
               }

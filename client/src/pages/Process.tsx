@@ -16,13 +16,14 @@ export default function Process() {
         eyebrow="운영구조"
         title={
           <>
-            <span className="block sm:inline">오투HD는</span>{" "}
-            <span className="block sm:inline">대행이 아니라</span>{" "}
-            <span className="block sm:inline">성장 운영 구조를</span>{" "}
-            <span className="block sm:inline">설계합니다.</span>
+            오투HD는 대행이 아니라 성장 운영<br />
+            구조를 설계합니다.
           </>
         }
         description="프로젝트는 분석에서 시작해 전략 설계, 운영 구축, 실행, 성장 관리로 이어집니다. 각 단계는 데이터와 현장 실행을 함께 검토하도록 설계되어 있습니다."
+        contentClassName="lg:max-w-7xl"
+        titleClassName="lg:max-w-4xl"
+        descriptionClassName="lg:max-w-7xl lg:[text-wrap:wrap]"
       />
 
       <section className="overflow-hidden py-10 sm:py-16">

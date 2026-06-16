@@ -85,8 +85,10 @@ export default function Business() {
       />
       <PageHero
         eyebrow="사업분야"
-        title="성장은 서비스 목록이 아니라 연결된 구조에서 만들어집니다."
-        description="오투HD는 다섯 가지 사업을 각각 독립적으로 운영하면서도, 실제 프로젝트에서는 하나의 성장 시스템으로 연결합니다. 각 카드를 선택하면 상세 페이지로 이동합니다."
+        title={<>성장은 서비스 목록이 아니라 연결된<br />구조에서 만들어집니다.</>}
+        description="오투HD는 다섯 가지 사업을 각각 독립적으로 운영하면서도, 실제 프로젝트에서는 하나의 성장 시스템으로 연결합니다."
+        contentClassName="lg:max-w-6xl"
+        descriptionClassName="lg:max-w-6xl lg:[text-wrap:wrap]"
       />
       <section className="overflow-hidden py-10 sm:py-16">
         <div className="container grid gap-5 md:grid-cols-2 xl:grid-cols-5">
