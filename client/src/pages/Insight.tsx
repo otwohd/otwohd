@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import { ArrowLeft, ArrowRight, LockKeyhole, Search, FileText } from "lucide-react";
+import { ArrowLeft, ArrowRight, FileText } from "lucide-react";
 import PageHero from "@/components/PageHero";
 import Seo from "@/components/Seo";
 import { trpc } from "@/lib/trpc";
@@ -80,18 +80,9 @@ export default function Insight() {
       />
       <PageHero
         eyebrow="비즈니스 성장 가이드"
-        title="성과를 반복하는 비즈니스 성장 구조와 실행 전략"
+        title={<>성과를 반복하는 비즈니스<br />성장 구조와 실행 전략</>}
         description="오투HD의 '비즈니스 성장 가이드'는 단순한 트렌드 전달을 넘어, 광고·영업·데이터 운영이 하나로 연결된 실전 성장 구조를 제시합니다. 잠재 고객 발굴부터 세일즈 인프라 구축, 영업 전환율을 높이는 데이터 리포팅까지 기업의 지속 가능한 성장을 위한 검증된 비즈니스 인사이트를 확인해 보세요."
-      >
-        <div className="flex flex-wrap gap-3">
-          <div className="inline-flex items-center gap-2 rounded-full border border-sky-100 bg-white px-4 py-2 text-sm font-bold text-slate-600 shadow-sm">
-            <LockKeyhole className="h-4 w-4 text-primary" /> 관리자만 포스팅 가능 · 일반 유저 열람 전용
-          </div>
-          <div className="inline-flex items-center gap-2 rounded-full border border-sky-100 bg-white px-4 py-2 text-sm font-bold text-slate-600 shadow-sm">
-            <Search className="h-4 w-4 text-primary" /> Category · Tag · SEO URL
-          </div>
-        </div>
-      </PageHero>
+      />
 
       <section className="pb-12 sm:pb-20">
         <div className="container">
