@@ -1,4 +1,16 @@
 User-agent: *
 Allow: /
 
-Sitemap: /sitemap.xml
+# 네이버 검색봇
+User-agent: Yeti
+Allow: /
+
+# 구글 검색봇
+User-agent: Googlebot
+Allow: /
+
+# 빙 검색봇
+User-agent: Bingbot
+Allow: /
+
+Sitemap: https://otwohd.com/sitemap.xml
