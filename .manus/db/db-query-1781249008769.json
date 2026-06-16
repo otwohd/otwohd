@@ -1,0 +1,19 @@
+{
+  "query": "SELECT id, title, slug, category, published, readingTime, createdAt FROM insight_posts ORDER BY createdAt DESC LIMIT 3;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user sSxGv7QXnpoU5ND.root --database LpsUXXNpeJSu5pmKCxWZMp --execute SELECT id, title, slug, category, published, readingTime, createdAt FROM insight_posts ORDER BY createdAt DESC LIMIT 3;",
+  "rows": [
+    {
+      "id": "1",
+      "title": "종합영업대행사를 선택해야 하는 5가지 이유 (AEO·SEO 최적화)",
+      "slug": "why-choose-comprehensive-sales-agency-1781248972660",
+      "category": "영업전략",
+      "published": "1",
+      "readingTime": "5분",
+      "createdAt": "2026-06-12 07:22:54"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitle\tslug\tcategory\tpublished\treadingTime\tcreatedAt\n1\t종합영업대행사를 선택해야 하는 5가지 이유 (AEO·SEO 최적화)\twhy-choose-comprehensive-sales-agency-1781248972660\t영업전략\t1\t5분\t2026-06-12 07:22:54\n",
+  "stderr": "",
+  "execution_time_ms": 1813
+}
