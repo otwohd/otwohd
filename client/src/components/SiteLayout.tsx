@@ -1,7 +1,7 @@
 // Brand layout: calm premium B2B navigation with OTWOHD as a business growth and sales infrastructure group.
 import { PropsWithChildren, useEffect, useState } from "react";
 import { Link, useLocation } from "wouter";
-import { ArrowUpRight, Menu, X } from "lucide-react";
+import { ArrowUpRight, ChevronDown, Menu, X } from "lucide-react";
 import { brand, navItems } from "@/lib/site";
 
 function LogoMark() {
@@ -22,12 +22,18 @@ function LogoMark() {
   );
 }
 
+function isActivePath(location: string, href: string) {
+  return href === "/" ? location === "/" : location === href || location.startsWith(`${href}/`);
+}
+
 export default function SiteLayout({ children }: PropsWithChildren) {
   const [location] = useLocation();
   const [open, setOpen] = useState(false);
+  const [desktopMenuOpen, setDesktopMenuOpen] = useState<string | null>(null);
 
   useEffect(() => {
     setOpen(false);
+    setDesktopMenuOpen(null);
   }, [location]);
 
   return (
@@ -43,7 +49,52 @@ export default function SiteLayout({ children }: PropsWithChildren) {
           <LogoMark />
           <nav className="hidden items-center gap-1 rounded-full border border-slate-200/80 bg-white/72 p-1 shadow-sm lg:flex" aria-label="주요 메뉴">
             {navItems.map((item) => {
-              const active = item.href === "/" ? location === "/" : location.startsWith(item.href);
+              const children = "children" in item ? item.children : undefined;
+              const hasChildren = Array.isArray(children);
+              const active = hasChildren
+                ? children.some((child) => isActivePath(location, child.href))
+                : isActivePath(location, item.href);
+
+              if (hasChildren) {
+                const expanded = desktopMenuOpen === item.href;
+                return (
+                  <div key={item.href} className="relative">
+                    <button
+                      type="button"
+                      onClick={() => setDesktopMenuOpen(expanded ? null : item.href)}
+                      className={`inline-flex items-center gap-1 rounded-full px-4 py-2 text-sm font-semibold transition ${
+                        active ? "bg-slate-950 text-white shadow-sm" : "text-slate-600 hover:bg-slate-100 hover:text-slate-950"
+                      }`}
+                      aria-haspopup="menu"
+                      aria-expanded={expanded}
+                    >
+                      {item.label}
+                      <ChevronDown className={`h-4 w-4 transition ${expanded ? "rotate-180" : ""}`} />
+                    </button>
+                    {expanded && (
+                      <div className="absolute left-1/2 top-[calc(100%+0.7rem)] w-44 -translate-x-1/2 rounded-[1.25rem] border border-slate-200/80 bg-white/95 p-2 shadow-[0_22px_70px_rgba(15,23,42,0.13)] backdrop-blur-xl" role="menu">
+                        {children.map((child) => {
+                          const childActive = isActivePath(location, child.href);
+                          return (
+                            <Link
+                              key={child.href}
+                              href={child.href}
+                              onClick={() => setDesktopMenuOpen(null)}
+                              className={`block rounded-2xl px-4 py-3 text-sm font-extrabold transition ${
+                                childActive ? "bg-sky-50 text-primary" : "text-slate-650 hover:bg-slate-100 hover:text-slate-950"
+                              }`}
+                              role="menuitem"
+                            >
+                              {child.label}
+                            </Link>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
+                );
+              }
+
               return (
                 <Link
                   key={item.href}
@@ -75,16 +126,40 @@ export default function SiteLayout({ children }: PropsWithChildren) {
         {open && (
           <div className="mobile-menu-panel container pb-5 lg:hidden">
             <nav className="grid gap-2 rounded-[1.5rem] border border-slate-200 bg-white p-3 shadow-xl" aria-label="모바일 메뉴">
-              {navItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setOpen(false)}
-                  className="rounded-2xl px-4 py-3 text-sm font-bold text-slate-700 hover:bg-slate-100"
-                >
-                  {item.label}
-                </Link>
-              ))}
+              {navItems.map((item) => {
+                const children = "children" in item ? item.children : undefined;
+                const hasChildren = Array.isArray(children);
+                if (hasChildren) {
+                  return (
+                    <div key={item.href} className="rounded-2xl bg-slate-50 p-2">
+                      <p className="px-3 pb-2 pt-1 text-xs font-black tracking-[0.18em] text-slate-400">{item.label}</p>
+                      <div className="grid gap-1">
+                        {children.map((child) => (
+                          <Link
+                            key={child.href}
+                            href={child.href}
+                            onClick={() => setOpen(false)}
+                            className="rounded-2xl bg-white px-4 py-3 text-sm font-bold text-slate-700 hover:bg-slate-100"
+                          >
+                            {child.label}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                }
+
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setOpen(false)}
+                    className="rounded-2xl px-4 py-3 text-sm font-bold text-slate-700 hover:bg-slate-100"
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
             </nav>
           </div>
         )}

@@ -41,11 +41,31 @@ export const assetUrls = {
 
 export const navItems = [
   { href: "/", label: "메인" },
-  { href: "/about", label: "소개" },
+  {
+    href: "/about",
+    label: "소개",
+    children: [
+      { href: "/about", label: "소개" },
+      { href: "/affiliates", label: "계열사" },
+    ],
+  },
   { href: "/business", label: "사업분야" },
   { href: "/process", label: "운영구조" },
   { href: "/insight", label: "인사이트" },
   { href: "/contact", label: "문의하기" },
+];
+
+export const affiliates = [
+  {
+    slug: "otwofriends",
+    name: "오투프렌즈",
+    englishName: "Otwo Friends",
+    relation: "오투HD 계열사",
+    url: "https://otwofriends-jfa5awqq.manus.space/",
+    summary:
+      "오투프렌즈는 오투HD의 실행 인프라와 성장 구조 안에서 연결되는 계열사로, 고객 접점과 파트너 협업을 확장하는 브랜드입니다.",
+    keywords: ["계열사", "파트너 네트워크", "고객 접점 확장"],
+  },
 ];
 
 export const businessModels = [

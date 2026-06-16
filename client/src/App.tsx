@@ -9,6 +9,7 @@ import MainPopup from "./components/MainPopup";
 import SiteLayout from "./components/SiteLayout";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import About from "./pages/About";
+import Affiliates from "./pages/Affiliates";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminLogin from "./pages/AdminLogin";
 import Business, { BusinessDetail } from "./pages/Business";
@@ -72,6 +73,7 @@ function Router() {
             <Switch>
               <Route path="/" component={Home} />
               <Route path="/about" component={About} />
+              <Route path="/affiliates" component={Affiliates} />
               <Route path="/business" component={Business} />
               <Route path="/business/:slug">{(params) => <BusinessDetail slug={params.slug} />}</Route>
               <Route path="/process" component={Process} />
